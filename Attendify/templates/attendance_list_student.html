@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}My Attendance{% endblock %}
+{% block content %}
+  <h2>My Attendance</h2>
+  <table>
+    <thead><tr><th>#</th><th>Date</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      {% for a in attendances %}
+        <tr><td>{{ loop.index }}</td><td>{{ a.date }}</td><td>{{ a.status }}</td><td>{{ a.notes or '-' }}</td></tr>
+      {% else %}
+        <tr><td colspan="4">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

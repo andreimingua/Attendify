@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}My Dashboard{% endblock %}
+{% block content %}
+  <h2>Welcome, {{ student.full_name() if student else current_user.username }}</h2>
+  <p class="small">Your attendance records:</p>
+  <table>
+    <thead><tr><th>#</th><th>Date</th><th>Status</th><th>Notes</th></tr></thead>
+    <tbody>
+      {% for a in attendances %}
+        <tr><td>{{ loop.index }}</td><td>{{ a.date }}</td><td>{{ a.status }}</td><td>{{ a.notes or '-' }}</td></tr>
+      {% else %}
+        <tr><td colspan="4">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

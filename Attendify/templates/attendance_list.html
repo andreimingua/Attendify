@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Attendance{% endblock %}
+{% block content %}
+  <div class="header-row">
+    <div><h2>Attendance</h2><p class="small">View and manage attendance records.</p></div>
+    <div class="actions"><a class="btn btn-primary" href="{{ url_for('main.add_attendance') }}">Add Attendance</a></div>
+  </div>
+
+  <table>
+    <thead><tr><th>#</th><th>Date</th><th>Student</th><th>Status</th><th>Notes</th><th>Actions</th></tr></thead>
+    <tbody>
+      {% for a in attendances.items %}
+        <tr>
+          <td>{{ loop.index + ((attendances.page-1) * attendances.per_page) }}</td>
+          <td>{{ a.date }}</td>
+          <td>{{ a.student.full_name() }} ({{ a.student.student_number }})</td>
+          <td>{{ a.status }}</td>
+          <td>{{ a.notes or '-' }}</td>
+          <td>
+            <a class="btn" href="{{ url_for('main.edit_attendance', id=a.id) }}">Edit</a>
+            <form style="display:inline" method="post" action="{{ url_for('main.delete_attendance', id=a.id) }}" onsubmit="return confirm('Delete this record?');">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6">No attendance records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    {% if attendances.has_prev %}
+      <a href="{{ url_for('main.attendance_list', page=attendances.prev_num) }}">Prev</a>
+    {% endif %}
+    <span>Page {{ attendances.page }} of {{ attendances.pages }}</span>
+    {% if attendances.has_next %}
+      <a href="{{ url_for('main.attendance_list', page=attendances.next_num) }}">Next</a>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Attendance Report{% endblock %}
+{% block content %}
+  <h2>Attendance Report (per course)</h2>
+  <table>
+    <thead><tr><th>#</th><th>Course</th><th>Student</th><th>Total</th><th>Present</th><th>%</th></tr></thead>
+    <tbody>
+      {% for row in data %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ row.course.code }} - {{ row.course.title }}</td>
+          <td>{{ row.student.full_name() }} ({{ row.student.student_number }})</td>
+          <td>{{ row.total }}</td>
+          <td>{{ row.present }}</td>
+          <td>{{ '%.2f'|format(row.percentage) }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6">No data available.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

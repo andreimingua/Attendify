@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}My Report{% endblock %}
+{% block content %}
+  <h2>My Attendance Summary</h2>
+  <p>Student: {{ student.full_name() }} ({{ student.student_number }})</p>
+  <p>Total records: {{ total }}</p>
+  <p>Present: {{ present }}</p>
+  <p>Percentage: {{ percentage }}%</p>
+{% endblock %}
